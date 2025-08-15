@@ -1365,6 +1365,15 @@ app.get('/api/roku-config', (req, res) => {
   });
 });
 
+// Serve static files explicitly for Vercel
+app.get('/app.js', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'app.js'));
+});
+
+app.get('/styles.css', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'styles.css'));
+});
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
