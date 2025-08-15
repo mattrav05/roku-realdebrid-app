@@ -1,6 +1,29 @@
-# Roku Real-Debrid App
+# Roku Real-Debrid App 🎬
 
-A Roku application that integrates with Real-Debrid to stream your torrents and downloads directly to your Roku device.
+A Roku application that integrates with Real-Debrid to stream torrents directly to your Roku device. Works like Torrentio/Stremio but optimized for Roku!
+
+## 🚀 Quick Deploy to Vercel (Recommended)
+
+**Deploy in 2 minutes - No server needed!**
+
+1. **Run deployment:**
+   ```bash
+   npx vercel
+   ```
+
+2. **Add your API key:**
+   ```bash
+   npx vercel env add REALDEBRID_API_KEY
+   ```
+
+3. **Deploy to production:**
+   ```bash
+   npx vercel --prod
+   ```
+
+Your app will be live at `https://roku-realdebrid.vercel.app` - completely free, always available!
+
+See [DEPLOY_TO_VERCEL.md](DEPLOY_TO_VERCEL.md) for detailed instructions.
 
 ## Features
 
