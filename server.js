@@ -41,7 +41,10 @@ app.get('/api', (req, res) => {
 });
 
 const REALDEBRID_API_BASE = 'https://api.real-debrid.com/rest/1.0';
-const API_KEY = process.env.REALDEBRID_API_KEY;
+const API_KEY = (process.env.REALDEBRID_API_KEY || '').trim();
+
+console.log('API Key length:', API_KEY.length);
+console.log('API Key first 10 chars:', API_KEY.substring(0, 10));
 
 const rdAxios = axios.create({
   baseURL: REALDEBRID_API_BASE,
