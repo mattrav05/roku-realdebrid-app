@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="FileListScene" extends="Scene">
+  <script type="text/brightscript" uri="pkg:/components/FileListScene.brs" />
+  <script type="text/brightscript" uri="pkg:/source/RealDebridAPI.brs" />
+  
+  <children>
+    <Rectangle id="background" color="0x000000FF" width="1280" height="720" />
+    <Label id="titleLabel" text="Your Files" 
+           font="font:LargeBoldSystemFont" 
+           color="0xFFFFFFFF" 
+           translation="[50, 50]" />
+    
+    <RowList id="fileList" 
+             translation="[50, 150]" 
+             itemSize="[1180, 100]" 
+             numRows="5" 
+             focusable="true" />
+             
+    <Label id="statusLabel" text="Loading..." 
+           color="0xFFFFFFFF" 
+           translation="[50, 650]" />
+  </children>
+</component>
