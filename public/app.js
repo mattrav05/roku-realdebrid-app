@@ -1,19 +1,4 @@
 const API_URL = '/api';
-const BYPASS_HEADERS = {
-    'x-vercel-protection-bypass': '23432423442342342342342343242342'
-};
-
-// Helper function for authenticated fetch
-async function fetch(url, options = {}) {
-    const fetchOptions = {
-        ...options,
-        headers: {
-            ...BYPASS_HEADERS,
-            ...options.headers
-        }
-    };
-    return fetch(url, fetchOptions);
-}
 
 let currentUser = null;
 let currentTorrents = [];
