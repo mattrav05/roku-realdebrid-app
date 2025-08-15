@@ -1,4 +1,19 @@
 const API_URL = '/api';
+const BYPASS_HEADERS = {
+    'x-vercel-protection-bypass': '23432423442342342342342343242342'
+};
+
+// Helper function for authenticated fetch
+async function apiFetch(url, options = {}) {
+    const fetchOptions = {
+        ...options,
+        headers: {
+            ...BYPASS_HEADERS,
+            ...options.headers
+        }
+    };
+    return apiFetch(url, fetchOptions);
+}
 
 let currentUser = null;
 let currentTorrents = [];
@@ -51,7 +66,7 @@ function initializeTabs() {
 
 async function loadUserInfo() {
     try {
-        const response = await fetch(`${API_URL}/user`);
+        const response = await apiFetch(`${API_URL}/user`);
         if (response.ok) {
             currentUser = await response.json();
             document.getElementById('username').textContent = currentUser.username || 'Guest';
@@ -77,7 +92,7 @@ async function searchTorrents() {
     resultsContainer.innerHTML = '<div class="loading">Searching...</div>';
     
     try {
-        const response = await fetch(`${API_URL}/search?query=${encodeURIComponent(query)}`);
+        const response = await apiFetch(`${API_URL}/search?query=${encodeURIComponent(query)}`);
         const results = await response.json();
         
         if (results.length === 0) {
@@ -120,7 +135,7 @@ async function loadDownloads() {
     container.innerHTML = '<div class="loading">Loading downloads...</div>';
     
     try {
-        const response = await fetch(`${API_URL}/downloads`);
+        const response = await apiFetch(`${API_URL}/downloads`);
         currentDownloads = await response.json();
         
         if (currentDownloads.length === 0) {
@@ -157,7 +172,7 @@ async function loadTorrents() {
     container.innerHTML = '<div class="loading">Loading torrents...</div>';
     
     try {
-        const response = await fetch(`${API_URL}/torrents`);
+        const response = await apiFetch(`${API_URL}/torrents`);
         currentTorrents = await response.json();
         
         if (currentTorrents.length === 0) {
@@ -216,7 +231,7 @@ async function addMagnet() {
     }
     
     try {
-        const response = await fetch(`${API_URL}/torrents/add`, {
+        const response = await apiFetch(`${API_URL}/torrents/add`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ magnet })
@@ -247,7 +262,7 @@ async function streamTorrent(magnet, infoHash, title) {
         // Show loading message
         showVideoPlayer(null, 'Loading stream...');
         
-        const response = await fetch(`${API_URL}/stream`, {
+        const response = await apiFetch(`${API_URL}/stream`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
@@ -357,7 +372,7 @@ window.closeVideoPlayer = function() {
 async function addMagnetFromSearch(magnet, title) {
     if (confirm(`Add "${title}" to Real-Debrid for future streaming?`)) {
         try {
-            const response = await fetch(`${API_URL}/torrents/add`, {
+            const response = await apiFetch(`${API_URL}/torrents/add`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ magnet })
@@ -383,7 +398,7 @@ async function addMagnetFromSearch(magnet, title) {
 
 async function selectFiles(torrentId) {
     try {
-        const response = await fetch(`${API_URL}/torrents/${torrentId}`);
+        const response = await apiFetch(`${API_URL}/torrents/${torrentId}`);
         const torrentInfo = await response.json();
         
         if (torrentInfo.files && torrentInfo.files.length > 0) {
@@ -431,7 +446,7 @@ function showFileSelectionModal(torrentId, files) {
 
 async function submitFileSelection(torrentId, files) {
     try {
-        const response = await fetch(`${API_URL}/torrents/select/${torrentId}`, {
+        const response = await apiFetch(`${API_URL}/torrents/select/${torrentId}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ files })
@@ -453,7 +468,7 @@ async function submitFileSelection(torrentId, files) {
 async function deleteTorrent(torrentId) {
     if (confirm('Are you sure you want to delete this torrent?')) {
         try {
-            const response = await fetch(`${API_URL}/torrents/${torrentId}`, {
+            const response = await apiFetch(`${API_URL}/torrents/${torrentId}`, {
                 method: 'DELETE'
             });
             
@@ -472,7 +487,7 @@ async function deleteTorrent(torrentId) {
 
 async function unrestrictLink(link) {
     try {
-        const response = await fetch(`${API_URL}/unrestrict`, {
+        const response = await apiFetch(`${API_URL}/unrestrict`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ link })
@@ -495,7 +510,7 @@ async function unrestrictLink(link) {
 
 async function checkAvailability(hash) {
     try {
-        const response = await fetch(`${API_URL}/torrents/instantAvailability/${hash}`);
+        const response = await apiFetch(`${API_URL}/torrents/instantAvailability/${hash}`);
         const availability = await response.json();
         
         if (availability && Object.keys(availability).length > 0) {
@@ -563,7 +578,7 @@ function getStatusClass(status) {
 // Real-Debrid Authentication Functions
 async function checkAuthStatus() {
     try {
-        const response = await fetch(`${API_URL}/auth/status`);
+        const response = await apiFetch(`${API_URL}/auth/status`);
         const status = await response.json();
         
         const authStatusDiv = document.getElementById('authStatus');
@@ -587,7 +602,7 @@ async function checkAuthStatus() {
 
 async function startAuthentication() {
     try {
-        const response = await fetch(`${API_URL}/auth/device`);
+        const response = await apiFetch(`${API_URL}/auth/device`);
         const data = await response.json();
         
         if (data.user_code) {
@@ -610,7 +625,7 @@ async function startAuthentication() {
 
 async function checkTokenStatus() {
     try {
-        const response = await fetch(`${API_URL}/auth/token`, {
+        const response = await apiFetch(`${API_URL}/auth/token`, {
             method: 'POST'
         });
         const data = await response.json();
@@ -644,7 +659,7 @@ async function checkTokenStatus() {
 
 async function testConnection() {
     try {
-        const response = await fetch(`${API_URL}/user`);
+        const response = await apiFetch(`${API_URL}/user`);
         if (response.ok) {
             const userData = await response.json();
             alert(`✅ Connection successful!\nUser: ${userData.username}\nPremium: ${userData.premium ? 'Yes' : 'No'}`);
