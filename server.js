@@ -13,6 +13,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+// Middleware to add bypass header for web UI requests
+app.use((req, res, next) => {
+  // If request comes from browser without bypass header, add it
+  if (process.env.VERCEL && !req.headers['x-vercel-protection-bypass']) {
+    req.headers['x-vercel-protection-bypass'] = process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
+  }
+  next();
+});
+
 // API info endpoint
 app.get('/api', (req, res) => {
   res.json({
