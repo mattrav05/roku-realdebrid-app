@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "BrightScript Debug: Launch",
+      "type": "brightscript",
+      "request": "launch",
+      "host": "127.0.0.1",
+      "password": "rokudev",
+      "port": 80,
+      "rootDir": "${workspaceFolder}",
+      "files": [
+        "manifest",
+        "source/**/*.*",
+        "components/**/*.*",
+        "images/**/*.*"
+      ]
+    }
+  ]
+}

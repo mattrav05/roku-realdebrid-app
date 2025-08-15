@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="MainScene" extends="Scene">
+  <script type="text/brightscript" uri="pkg:/components/MainScene.brs" />
+  
+  <children>
+    <Rectangle id="background" color="0x000000FF" width="1280" height="720" />
+    <Label id="titleLabel" text="Real-Debrid Player" 
+           font="font:LargeBoldSystemFont" 
+           color="0xFFFFFFFF" 
+           translation="[100, 100]" />
+    <Button id="loginButton" text="Login to Real-Debrid" 
+            translation="[100, 200]" 
+            focusable="true" />
+  </children>
+</component>

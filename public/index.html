@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Debrid Roku App - Web UI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Real-Debrid Roku App</h1>
+            <div id="userInfo" class="user-info">
+                <span id="username">Loading...</span>
+                <span id="premium">Premium Status</span>
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-button active" data-tab="search">Search & Stream</button>
+            <button class="tab-button" data-tab="downloads">My Downloads</button>
+            <button class="tab-button" data-tab="auth">Real-Debrid Auth</button>
+        </nav>
+
+        <div class="tab-content" id="search-tab">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search for torrents..." />
+                <button id="searchBtn">Search</button>
+            </div>
+            <div id="searchResults" class="results-container"></div>
+        </div>
+
+        <div class="tab-content" id="downloads-tab" style="display: none;">
+            <button id="refreshDownloads" class="refresh-btn">Refresh Downloads</button>
+            <div id="downloadsList" class="downloads-list"></div>
+        </div>
+
+        <div class="tab-content" id="auth-tab" style="display: none;">
+            <div class="auth-container">
+                <h3>Real-Debrid Authentication</h3>
+                <div id="authStatus" class="auth-status">
+                    <p>Checking authentication status...</p>
+                </div>
+                
+                <div id="authFlow" class="auth-flow" style="display: none;">
+                    <h4>Step 1: Get Authorization Code</h4>
+                    <button id="startAuth" class="btn-success">Start Authentication</button>
+                    
+                    <div id="authCode" class="auth-code" style="display: none;">
+                        <h4>Step 2: Authorize on Real-Debrid</h4>
+                        <div class="code-display">
+                            <p>Go to: <a id="authUrl" href="#" target="_blank">Real-Debrid Authorization</a></p>
+                            <p>Enter this code: <span id="userCode" class="code"></span></p>
+                        </div>
+                        <button id="checkToken" class="btn-success">Check Authorization Status</button>
+                        <div id="tokenStatus" class="token-status"></div>
+                    </div>
+                </div>
+                
+                <div id="authSuccess" class="auth-success" style="display: none;">
+                    <h4>✅ Successfully Authenticated!</h4>
+                    <p>You can now use Real-Debrid features for streaming.</p>
+                    <button id="testConnection" class="btn-success">Test Connection</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalTitle">Select Files</h3>
+            <div id="modalBody"></div>
+            <div class="modal-actions">
+                <button id="modalConfirm">Confirm</button>
+                <button id="modalCancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
