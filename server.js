@@ -1378,11 +1378,11 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// For Vercel serverless
-if (process.env.VERCEL) {
-  module.exports = app;
-} else {
-  // For local development
+// For Vercel serverless (always export the app)
+module.exports = app;
+
+// For local development
+if (!process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
     console.log(`API endpoints available at http://localhost:${PORT}/api`);
